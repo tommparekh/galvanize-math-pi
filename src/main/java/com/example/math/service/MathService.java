@@ -1,6 +1,7 @@
 package com.example.math.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MathService {
 
@@ -9,12 +10,10 @@ public class MathService {
         int answer = 0;
         String response = "";
 
-        for (Object i : valueList) {
-            response += i.toString() + " + ";
-            answer += Integer.valueOf((String) i);
-        }
-        response = response.substring(0, response.length() - 2);
-        response += "= " + answer;
+        answer = valueList.stream().mapToInt(i -> Integer.valueOf((String) i)).sum();
+        response = valueList.stream().map(s -> s.toString()).collect(Collectors.joining(" + "));
+
+        response += " = " + answer;
         return response;
     }
 
